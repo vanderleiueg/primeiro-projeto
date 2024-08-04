@@ -1,0 +1,84 @@
+@server = http://localhost:4003
+@auth = Authorization: Basic vanderlei:
+
+
+### api.clientes
+GET {{server}}/api/clientes?$expand=ordens($expand=nf)
+Content-Type: application/json
+{{auth}}
+
+// usando filter
+### api.clientes
+GET {{server}}/api/clientes?$filter=nome eq 'Valdir'
+Content-Type: application/json
+{{auth}}
+
+// usando order by
+### api.clientes
+GET {{server}}/api/clientes?$orderby=nome asc
+Content-Type: application/json
+{{auth}}
+
+
+//selecionando alguns campos e usando expand para trazer todos os jsons filhos
+### api.clientes
+GET {{server}}/api/clientes?$select=nome&$expand=ordens($select=valor;$expand=nf($select=idFiscal))
+Content-Type: application/json
+{{auth}}
+
+### api.clientes
+POST {{server}}/api/clientes
+Content-Type: application/json
+{{auth}}
+
+{  
+  "nome": "João Mario",
+  "idade": 53,
+  "ordens": [{ "valor": 11.05}]
+}
+
+### api.ordens
+POST {{server}}/api/ordens?$expand=nf
+Content-Type: application/json
+{{auth}}
+
+{
+  "cliente": {
+      "ID": "ec90d4d9-3476-41ea-821b-d5469e0fb965"
+    },
+  "valor": 55.13 
+}
+
+
+### api.notas
+GET {{server}}/api/notas?$expand=orden
+Content-Type: application/json
+{{auth}}
+
+### api.notas
+POST {{server}}/api/notas
+Content-Type: application/json
+{{auth}}
+
+{
+  "orden": {
+      "ID": "adcae22a-3002-4c11-ba11-846ae68ca8b7"
+    },
+  "idFiscal": "3333333333333" 
+}
+
+
+### api.clientes
+PATCH {{server}}/api/clientes(5d2af113-27fd-4cab-b49e-26c129f73bfb)
+Content-Type: application/json
+{{auth}}
+
+{  
+  "nome": "Valdir",
+  "idade": 45
+}
+
+### api.clientes
+DELETE {{server}}/api/clientes(0)
+Content-Type: application/json
+{{auth}}

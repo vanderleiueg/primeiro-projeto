@@ -1,0 +1,42 @@
+@server = http://localhost:4004
+@auth = Authorization: Basic alice:
+
+
+### Api.ordens
+GET {{server}}/api/ordens?$expand=cliente
+Content-Type: application/json
+{{auth}}
+
+
+### Api.ordens
+POST {{server}}/api/ordens
+Content-Type: application/json
+{{auth}}
+
+{
+  "cliente": {
+      "ID": "ec90d4d9-3476-41ea-821b-d5469e0fb965"
+    },
+  "valor": 11.13 
+}
+
+
+### Api.ordens
+PATCH {{server}}/api/ordens/1214404c-6bb6-4a75-ab0e-64658ee30ae0
+Content-Type: application/json
+{{auth}}
+
+{
+  "ID": "1214404c-6bb6-4a75-ab0e-64658ee30ae0",
+  "valor": 40.13,
+  "createdAt": "2010-05-31T00:00:00.000Z",
+  "createdBy": "createdBy.q11g@example.org",
+  "modifiedAt": "2016-11-05T00:00:00.000Z",
+  "modifiedBy": "modifiedBy.q11g@example.com"
+}
+
+
+### Api.ordens
+DELETE {{server}}/api/ordens/1214404c-6bb6-4a75-ab0e-64658ee30ae0
+Content-Type: application/json
+{{auth}}
